@@ -40,8 +40,8 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  bool operator==(cosnt TraversableContainer& val) const noexcept = delete;
-  bool operator!=(cosnt TraversableContainer& val) const noexcept = delete;
+  bool operator==(const TraversableContainer& val) const noexcept = delete;
+  bool operator!=(const TraversableContainer& val) const noexcept = delete;
 
   /* ************************************************************************ */
 
@@ -137,7 +137,7 @@ public:
   PostOrderTraversableContainer& operator=(const PostOrderTraversableContainer& val) = delete; // Copy assignment of abstract types is not possible.
 
   // Move assignment
-  PostOrderTraversableContainer& operator=(PostOrderTraversableContainer&& val) noexcept = delete // Move assignment of abstract types is not possible.
+  PostOrderTraversableContainer& operator=(PostOrderTraversableContainer&& val) noexcept = delete; // Move assignment of abstract types is not possible.
 
   /* ************************************************************************ */
 
@@ -231,7 +231,7 @@ protected:
 public:
 
   // Destructor
-  virtual ~BreadthTraversableContainer() = default
+  virtual ~BreadthTraversableContainer() = default;
 
   /* ************************************************************************ */
 
@@ -245,7 +245,7 @@ public:
 
   // Comparison operators
   bool operator==(const BreadthTraversableContainer& val) const noexcept = delete; // Comparison of abstract types might be possible.
-  bool operator==(const BreadthTraversableContainer& val) const noexcept = delete; // Comparison of abstract types might be possible.
+  bool operator!=(const BreadthTraversableContainer& val) const noexcept = delete; // Comparison of abstract types might be possible.
 
   /* ************************************************************************ */
 
