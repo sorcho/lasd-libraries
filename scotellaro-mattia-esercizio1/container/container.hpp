@@ -42,9 +42,9 @@ public:
 
   // Specific member functions
 
-  virtual inline bool Empty() { return (size == 0); }
+  virtual inline bool Empty() const noexcept { return (size == 0); }
 
-  virtual inline ulong Size() { return size; }
+  virtual inline ulong Size() const noexcept { return size; }
 };
 
 /* ************************************************************************** */
