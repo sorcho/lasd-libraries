@@ -133,7 +133,10 @@ namespace lasd {
 
     template <typename Data>
     void SortableLinearContainer<Data>::Sort() noexcept {
-        HeapSort(size);
+        if (!Container::Empty())
+            HeapSort(size);
+
+        throw std::length_error ("Errore: container vuoto!");
     }
 
     // Auxiliary member functions
