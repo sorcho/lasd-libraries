@@ -1,4 +1,4 @@
-
+#include "list.hpp"
 namespace lasd {
 
 /* ************************************************************************** */
@@ -27,11 +27,12 @@ namespace lasd {
     // Comparison operators
     template <typename Data>
     bool List<Data>::Node::operator==(const Node &node) const noexcept {
-        return (element == node.element) \ 
-        && ((next == nullptr && node.next == nullptr) || (next != null && node.next != null));
+        return (element == node.element) \
+        && ((next == nullptr && node.next == nullptr) || (next != nullptr && node.next != nullptr));
     }
 
-    inline bool operator!=(const Node &node) const noexcept {
+    template <typename Data>
+    inline bool List<Data>::Node::operator!=(const Node &node) const noexcept {
         return !(*this == node);
     }
 
