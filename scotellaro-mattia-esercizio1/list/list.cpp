@@ -28,7 +28,7 @@ namespace lasd {
     template <typename Data>
     bool List<Data>::Node::operator==(const Node &node) const noexcept {
         return (element == node.element) \
-        && ((next == nullptr && node.next == nullptr) || ((next != nullptr && node.next != nullptr) && element == node.element));
+        && ((next == nullptr && node.next == nullptr) || (next != nullptr && node.next != nullptr) && ((*next) == (*node.next)));
     }
 
     template <typename Data>
@@ -69,7 +69,7 @@ namespace lasd {
 
     // Copy constructor
     template <typename Data>
-    List<Data>::List(const List& list) {
+    List<Data>::List(const List<Data>& list) {
         if (list.tail != nullptr) {
             tail = new Node(*list.tail);
             head = list.head -> Clone(tail);
@@ -79,7 +79,7 @@ namespace lasd {
 
     // Move constructor
     template <typename Data>
-    List<Data>::List(List&& list) noexcept {
+    List<Data>::List(List<Data>&& list) noexcept {
         std::swap(head, list.head);
         std::swap(tail, list.tail);
         std::swap(size, list.size);
@@ -93,7 +93,7 @@ namespace lasd {
 
     // Copy assignment
     template <typename Data>
-    List<Data>& List<Data>::operator=(const List& list) {
+    List<Data>& List<Data>::operator=(const List<Data>& list) {
         if (size <= list.size) {
             if (tail == nullptr) {
                 List<Data> *tmplist = new List<Data>(list);
@@ -131,7 +131,7 @@ namespace lasd {
 
     // Move assignment
     template <typename Data>
-    List<Data>& List<Data>::operator=(List&& list) noexcept {
+    List<Data>& List<Data>::operator=(List<Data>&& list) noexcept {
         std::swap(head, list.head);
         std::swap(tail, list.tail);
         std::swap(size, list.size);
@@ -141,7 +141,7 @@ namespace lasd {
 
     // Comparison operators
     template <typename Data>
-    bool List<Data>::operator==(const List& list) const noexcept {
+    bool List<Data>::operator==(const List<Data>& list) const noexcept {
         if (size != list.size)
             return false;
         else {
@@ -151,16 +151,17 @@ namespace lasd {
             while (cur != nullptr) {
                 if(cur -> element != listcur -> element)
                     return false;
+            
+                cur = cur -> next;
+                listcur = listcur -> next;
             }
-            cur = cur -> next;
-            listcur = listcur -> next;
         }
 
         return true;
     }
 
     template <typename Data>
-    inline bool List<Data>::operator!=(const List& list) const noexcept {
+    inline bool List<Data>::operator!=(const List<Data>& list) const noexcept {
         return !(*this == list);
     }
 
@@ -171,7 +172,7 @@ namespace lasd {
         newnode -> next = head;
         head = newnode;
 
-        if (tail = nullptr)
+        if (tail == nullptr)
             tail = head;
 
         size++;
@@ -322,7 +323,7 @@ namespace lasd {
     const Data& List<Data>::operator[](const ulong index) const {
         if (index < size) {
             Node *cur = head;
-            for (ulong i = 0; i < index; i++, cur -> next) {}
+            for (ulong i = 0; i < index; i++, cur = cur -> next) {}
             return cur -> element;
         } else 
             throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
@@ -332,7 +333,7 @@ namespace lasd {
     Data& List<Data>::operator[](const ulong index) {
         if (index < size) {
             Node *cur = head;
-            for (ulong i = 0; i < index; i++, cur -> next) {}
+            for (ulong i = 0; i < index; i++, cur = cur -> next) {}
             return cur -> element;
         } else 
             throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
