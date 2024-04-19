@@ -5,28 +5,28 @@ namespace lasd {
     //------------- PRE ORDER ---------------------
 
     template <typename Data>
-    void PreOrderMappableContainer<Data>::Map(MapFun fun) const {
+    inline void PreOrderMappableContainer<Data>::Map(MapFun fun)  {
         PreOrderMap(fun);
     }
 
     //------------- POST ORDER ---------------------
 
     template <typename Data>
-    void PostOrderMappableContainer<Data>::Map(MapFun fun) const {
+    inline void PostOrderMappableContainer<Data>::Map(MapFun fun)  {
         PostOrderMap(fun);
     }
 
     //------------- IN ORDER ---------------------
 
     template <typename Data>
-    void InOrderMappableContainer<Data>::Map(MapFun fun) const {
+    inline void InOrderMappableContainer<Data>::Map(MapFun fun)  {
         InOrderMap(fun);
     }
 
     //------------- BREADTH ORDER ---------------------
 
     template <typename Data>
-    void BreadthMappableContainer<Data>::Map(MapFun fun) const {
+    inline void BreadthMappableContainer<Data>::Map(MapFun fun)  {
         BreadthMap(fun);
     }
 

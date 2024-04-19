@@ -1,3 +1,5 @@
+#include <stdexcept>
+#include <iostream>
 namespace lasd {
 
     typedef unsigned long int ulong;
@@ -8,13 +10,13 @@ namespace lasd {
 
     // Specific constructors
     template <typename Data>
-    Vector<Data>::Vector(const ulong newsize) noexcept {
+    Vector<Data>::Vector(const ulong newsize) {
         size = newsize;
         elem = new Data[size]{};
     }
 
     template <typename Data>
-    Vector<Data>::Vector(const TraversableContainer<Data>& cont) noexcept : Vector(cont.Size()) {
+    Vector<Data>::Vector(const TraversableContainer<Data>& cont) : Vector(cont.Size()) {
         ulong index = 0;
 
         cont.Traverse(
@@ -24,7 +26,7 @@ namespace lasd {
     }
 
     template <typename Data>
-    Vector<Data>::Vector(MappableContainer<Data>&& cont) noexcept : Vector(cont.Size()) {
+    Vector<Data>::Vector(MappableContainer<Data>&& cont) : Vector(cont.Size()) {
         ulong index = 0;
 
         cont.Map(
@@ -36,7 +38,7 @@ namespace lasd {
     // Copy constructor
     template <typename Data>
     Vector<Data>::Vector(const Vector& vec) {
-        this.size = vec.size;
+        size = vec.size;
 
         elem = new Data[size];
 
@@ -63,9 +65,8 @@ namespace lasd {
     // Move assignment
     template <typename Data>
     Vector<Data>& Vector<Data>::operator=(Vector<Data>&& vec) noexcept {
-        Vector<Data> *tmpvec = new Vector(vec);
-        *this = std::move(*tmpvec);
-        delete tmpvec;
+        std::swap(size, vec.size);
+        std::swap(elem, vec.elem);
         return *this;
     }
 
@@ -118,18 +119,22 @@ namespace lasd {
 
     template <typename Data>
     const Data& Vector<Data>::operator[](const ulong index) const {
-        if (index > size)
-            throw std::out_of_range("Indice maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
-        
-        return elem[index];
+        std::cout << index;
+        std::cout << size;
+        if (index >= size)
+            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
+        else
+            return elem[index];
     }
 
     template <typename Data>
     Data& Vector<Data>::operator[](const ulong index) {
-        if (index > size)
-            throw std::out_of_range("Indice maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
-        
-        return elem[index];
+        std::cout << index;
+        std::cout << size;
+        if (index >= size)
+            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
+        else
+            return elem[index];
     }
 
     template <typename Data>
@@ -196,7 +201,7 @@ namespace lasd {
     // Copy constructor
     template <typename Data>
     SortableVector<Data>::SortableVector(const SortableVector& vec) {
-        this.size = vec.size;
+        size = vec.size;
 
         elem = new Data[size];
 
@@ -223,9 +228,8 @@ namespace lasd {
     // Move assignment
     template <typename Data>
     SortableVector<Data>& SortableVector<Data>::operator=(SortableVector<Data>&& vec) noexcept {
-        SortableVector<Data> *tmpvec = new SortableVector(vec);
-        *this = std::move(*tmpvec);
-        delete tmpvec;
+        std::swap(size, vec.size);
+        std::swap(elem, vec.elem);
         return *this;
     }
 /* ************************************************************************** */

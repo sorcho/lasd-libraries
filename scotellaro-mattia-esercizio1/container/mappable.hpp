@@ -53,7 +53,7 @@ public:
 
   using MapFun = std::function<void(Data &)>;
 
-  virtual void Map(MapFun) const = 0;
+  virtual void Map(MapFun) = 0;
 
 };
 
@@ -93,13 +93,13 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void PreOrderMap(MapFun) const = 0;
+  inline virtual void PreOrderMap(MapFun) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(MapFun) const override; // Override MappableContainer member
+  virtual void Map(MapFun) override; // Override MappableContainer member
 
 };
 
@@ -140,13 +140,13 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void PostOrderMap(MapFun) const = 0;
+  inline virtual void PostOrderMap(MapFun) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(MapFun) const override; // Override MappableContainer member
+  virtual void Map(MapFun) override; // Override MappableContainer member
 
 };
 
@@ -186,13 +186,13 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void InOrderMap(MapFun) = 0;
+  inline virtual void InOrderMap(MapFun) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(MapFun) const override; // Override MappableContainer member
+  virtual void Map(MapFun) override; // Override MappableContainer member
 
 };
 
@@ -232,13 +232,13 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void BreadthMap(MapFun) = 0;
+  inline virtual void BreadthMap(MapFun) = 0;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from MappableContainer)
 
-  virtual void Map(MapFun) const override; // Override MappableContainer member
+  virtual void Map(MapFun) override; // Override MappableContainer member
 
 };
 

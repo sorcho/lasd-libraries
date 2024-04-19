@@ -86,14 +86,14 @@ namespace lasd {
     // Specific member function (inherited from MappableContainer)
 
     template <typename Data>
-    void LinearContainer<Data>::Map(MapFun fun) const {
+    inline void LinearContainer<Data>::Map(MapFun fun) {
         PreOrderMap(fun);
     }
 
     // Specific member function (inherited from PreOrderMappableContainer)
 
     template <typename Data>
-    void LinearContainer<Data>::PreOrderMap(MapFun fun) const {
+    inline void LinearContainer<Data>::PreOrderMap(MapFun fun) {
         for (ulong i = 0; i < size; i++)
             fun(operator[](i));
     }
@@ -101,10 +101,9 @@ namespace lasd {
     // Specific member function (inherited from PostOrderMappableContainer)
 
     template <typename Data>
-    void LinearContainer<Data>::PostOrderMap(MapFun fun) const {
-        ulong i = size;
-        while (i > 0)
-            fun(operator[](--i));
+    inline void LinearContainer<Data>::PostOrderMap(MapFun fun) {
+        for(ulong i = size - 1; i > 0; i--)
+            fun(operator[](i));
     }
 
     // ------------ SORTABLE LINEAR CONTAINER -------------------
@@ -133,14 +132,11 @@ namespace lasd {
 
     template <typename Data>
     void SortableLinearContainer<Data>::Sort() noexcept {
-        if (!Container::Empty())
-            HeapSort(size);
-
-        throw std::length_error ("Errore: container vuoto!");
+        QuickSort(0, size - 1);
     }
 
     // Auxiliary member functions
-
+    /*
     template <typename Data>
     void SortableLinearContainer<Data>::HeapSort(ulong size) noexcept {
         BuildHeap(size);
@@ -174,8 +170,36 @@ namespace lasd {
             std::swap(operator[](i), operator[](m));
             Heapify(size, m);
         }
+    }*/
+
+    template <typename Data>
+    void SortableLinearContainer<Data>::QuickSort(ulong p, ulong r) noexcept {
+        if (p < r){
+            ulong q = Partition(p, r);
+            QuickSort(p, q);
+            QuickSort(q+1, r);
+        }
     }
 
+    template <typename Data>
+    ulong SortableLinearContainer<Data>::Partition(ulong p, ulong r) noexcept {
+        Data x = operator[](p);
+        ulong i = p-1;
+        ulong j = r+1;
+
+        do{
+            do{
+                j--;
+            }while(x < operator[](j));
+            do{
+                i++;
+            }while(x > operator[](i));
+            if (i < j)
+                std::swap(operator[](i), operator[](j));
+        }while(i < j);
+
+        return j;
+    }
 /* ************************************************************************** */
 
 };

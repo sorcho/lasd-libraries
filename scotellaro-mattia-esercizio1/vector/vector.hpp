@@ -33,9 +33,9 @@ public:
   /* ************************************************************************ */
 
   // Specific constructors
-  Vector(const ulong) noexcept; // A vector with a given initial dimension
-  Vector(const TraversableContainer<Data>&) noexcept; // A vector obtained from a TraversableContainer
-  Vector(MappableContainer<Data>&&) noexcept; // A vector obtained from a MappableContainer
+  Vector(const ulong); // A vector with a given initial dimension
+  Vector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
+  Vector(MappableContainer<Data>&&); // A vector obtained from a MappableContainer
 
   /* ************************************************************************ */
 

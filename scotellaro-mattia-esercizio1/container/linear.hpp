@@ -83,19 +83,19 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void Map(MapFun) const override; // Override MappableContainer member
+  inline virtual void Map(MapFun) override; // Override MappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PreOrderMappableContainer)
 
-  virtual void PreOrderMap(MapFun) const override; // Override PreOrderMappableContainer member
+  inline virtual void PreOrderMap(MapFun) override; // Override PreOrderMappableContainer member
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from PostOrderMappableContainer)
 
-  virtual void PostOrderMap(MapFun) const override; // Override PostOrderMappableContainer member
+  inline virtual void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
 
 };
 
@@ -141,9 +141,12 @@ protected:
 
   // Auxiliary member functions
 
-  void HeapSort(ulong size) noexcept;
+  /*void HeapSort(ulong size) noexcept;
   void BuildHeap(ulong size) noexcept;
-  void Heapify(ulong size, ulong i) noexcept;
+  void Heapify(ulong size, ulong i) noexcept;*/
+
+  void QuickSort(ulong, ulong) noexcept;
+  ulong Partition(ulong, ulong) noexcept;
 
 };
 

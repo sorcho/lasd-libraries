@@ -1,7 +1,7 @@
 
 #include "zlasdtest/test.hpp"
 
-#include "zlasdtest/test.hpp"
+#include "zmytest/test.hpp"
 
 /* ************************************************************************** */
 
