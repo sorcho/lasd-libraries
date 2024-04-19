@@ -119,8 +119,6 @@ namespace lasd {
 
     template <typename Data>
     const Data& Vector<Data>::operator[](const ulong index) const {
-        std::cout << index;
-        std::cout << size;
         if (index >= size)
             throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
         else
@@ -129,8 +127,6 @@ namespace lasd {
 
     template <typename Data>
     Data& Vector<Data>::operator[](const ulong index) {
-        std::cout << index;
-        std::cout << size;
         if (index >= size)
             throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
         else

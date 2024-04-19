@@ -8,7 +8,7 @@ libcon = container/container.hpp container/testable.hpp container/traversable.cp
 
 libexc = $(libcon) zlasdtest/container/container.hpp zlasdtest/container/testable.hpp zlasdtest/container/traversable.hpp zlasdtest/container/mappable.hpp zlasdtest/container/dictionary.hpp zlasdtest/container/linear.hpp
 
-libexc1a = $(libexc) vector/vector.cpp vector/vector.hpp #list/list.cpp list/list.hpp
+libexc1a = $(libexc) vector/vector.cpp vector/vector.hpp list/list.cpp list/list.hpp
 
 #libexc1b = $(libexc1a) stack/stack.hpp stack/lst/stacklst.cpp stack/lst/stacklst.hpp stack/vec/stackvec.cpp stack/vec/stackvec.hpp queue/queue.hpp queue/lst/queuelst.cpp queue/lst/queuelst.hpp queue/vec/queuevec.cpp queue/vec/queuevec.hpp
 

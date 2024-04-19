@@ -172,7 +172,7 @@ void stestVector(uint & testnum, uint & testerr) {
   cout << endl << "Exercise 1A - Vector (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 }
 
-/* ************************************************************************** 
+/* ************************************************************************** */
 
 void stestListInt(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
@@ -353,7 +353,7 @@ void stestList(uint & testnum, uint & testerr) {
   cout << endl << "Exercise 1A - List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 }
 
-/* **************************************************************************
+/* ************************************************************************** */
 
 void stestVectorListInt(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
@@ -482,7 +482,7 @@ void stestVectorList(uint & testnum, uint & testerr) {
 
 void testSimpleExercise1A(uint & testnum, uint & testerr) {
   stestVector(testnum, testerr);
-  //stestList(testnum, testerr);
-  //stestVectorList(testnum, testerr);
+  stestList(testnum, testerr);
+  stestVectorList(testnum, testerr);
   cout << endl << "Exercise 1A (Simple Test) (Errors/Tests: " << testerr << "/" << testnum << ")" << endl;
 }

@@ -106,7 +106,7 @@ public:
   /* ************************************************************************ */
 
   // Comparison operators
-  inline bool operator==(const List&) const noexcept;
+  bool operator==(const List&) const noexcept;
   inline bool operator!=(const List&) const noexcept;
 
   /* ************************************************************************ */
@@ -188,6 +188,19 @@ public:
 
   void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
 
+  /* ************************************************************************ */
+
+  // Auxiliary member functions (List) (for TraversableContainer)
+
+  void PreOrderTraverse(TraverseFun, const Node*) const;
+  void PostOrderTraverse(TraverseFun, const Node*) const;
+
+  /* ************************************************************************ */
+
+  // Auxiliary member functions (List) (for MappableContainer)
+
+  void PreOrderMap(MapFun, Node*);
+  void PostOrderMap(MapFun, Node*);
 };
 
 /* ************************************************************************** */
