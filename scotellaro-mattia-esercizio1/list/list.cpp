@@ -62,7 +62,7 @@ namespace lasd {
     template <typename Data>
     List<Data>::List(MappableContainer<Data>&& cont) {
         cont.Map(
-            [this](const Data& data) {
+            [this](Data& data) {
                 InsertAtBack(std::move(data));
             });
     }
@@ -101,7 +101,7 @@ namespace lasd {
                 delete tmplist;
             } else {
                 Node *oldcur = list.head;
-                for (Node *newcur = head; newcur != nullptr; newcur = newcur -> next) {
+                for (Node *newcur = head; newcur != nullptr; oldcur = oldcur -> next, newcur = newcur -> next) {
                     newcur -> element = oldcur -> element;
                 }
 

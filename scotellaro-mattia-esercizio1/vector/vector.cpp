@@ -189,7 +189,7 @@ namespace lasd {
         ulong index = 0;
 
         cont.Map(
-            [this, &index](const Data& dat){
+            [this, &index](Data& dat){
                 elem[index++] = std::move(dat);
             });
     }
