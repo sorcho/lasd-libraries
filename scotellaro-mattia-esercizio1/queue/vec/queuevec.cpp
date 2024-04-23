@@ -1,8 +1,7 @@
-
+#include <stdexcept>
 namespace lasd {
-
 /* ************************************************************************** */
-
+    
     // Specific constructor
     template<typename Data>
     QueueVec<Data>::QueueVec(const TraversableContainer<Data>& cont) : Vector<Data>(cont), tail(size) {
@@ -43,9 +42,8 @@ namespace lasd {
     template<typename Data>
     bool QueueVec<Data>::operator==(const QueueVec& que) const noexcept {
         if (Size() == que.Size()) {
-            for (ulong index1 = head, index2 = que.head; index1*-----------------------------------------------------+
-             < tail; ++index1 %= size, ++index2 %= que.size) {
-                if (elements[index1] != que.elements[index2])
+            for (ulong index1 = head, index2 = que.head; index1< tail; ++index1 %= size, ++index2 %= que.size) {
+                if (elem[index1] != que.elem[index2])
                     return false;
             }
 
@@ -63,18 +61,18 @@ namespace lasd {
     template<typename Data>
     const Data& QueueVec<Data>::Head() const {
         if (head != tail) {
-            return elements[head];
+            return elem[head];
         } else {
-            std::length_error("Errore: coda vuota.");
+            throw std::length_error("Errore: coda vuota.");
         }
     }
 
     template<typename Data>
     Data& QueueVec<Data>::Head() {
         if (head != tail) {
-            return elements[head];
+            return elem[head];
         } else {
-            std::length_error("Errore: coda vuota.");
+            throw std::length_error("Errore: coda vuota.");
         }
     }
 
@@ -84,31 +82,32 @@ namespace lasd {
             Reduce();
             ++head %= size;
         } else
-            std::length_error("Errore: coda vuota.");
+            throw std::length_error("Errore: coda vuota.");
     }
 
     template<typename Data>
     Data QueueVec<Data>::HeadNDequeue() {
         if (head != tail) {
             Reduce();
-            Data dat(std::move(elements[head]));
+            Data dat(std::move(elem[head]));
             ++head %= size;
-            return std::move(dat);
-        } else
-            std::length_error("Errore: coda vuota.");
+            return dat;
+        } else {
+            throw std::length_error("Errore: coda vuota.");
+        }
     }
 
     template<typename Data>
     void QueueVec<Data>::Enqueue(const Data& data) {
         Expand();
-        elements[tail++] = data;
+        elem[tail++] = data;
         tail %= size;
     }
 
     template<typename Data>
     void QueueVec<Data>::Enqueue(Data&& data) {
         Expand();
-        elements[tail++] = std::move(data);
+        elem[tail++] = std::move(data);
         tail %= size;
     }
 
@@ -153,10 +152,10 @@ namespace lasd {
         ulong max = (num <= newsize) ? num : newsize;
 
         for(ulong index1 = head, index2 = 0; index2 < max; ++index1 %= size, ++index2) {
-            std::swap(elements[index1], tmpElem[index2]);
+            std::swap(elem[index1], tmpElem[index2]);
         }
 
-        std::swap(elements, tmpElem);
+        std::swap(elem, tmpElem);
         delete[] tmpElem;
         head = 0;
         tail = num;

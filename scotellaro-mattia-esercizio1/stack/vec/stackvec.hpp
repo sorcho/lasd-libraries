@@ -23,7 +23,7 @@ private:
 protected:
 
   using Vector<Data>::size;
-  using Vector<Data>::elements;
+  using Vector<Data>::elem;
   ulong index = 0;
 
 public:

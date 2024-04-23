@@ -26,7 +26,7 @@ protected:
   ulong tail = 0;
 
   using Vector<Data>::size;
-  using Vector<Data>::elements;
+  using Vector<Data>::elem;
 
 public:
 

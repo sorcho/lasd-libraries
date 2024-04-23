@@ -184,7 +184,7 @@ namespace lasd {
         newnode -> next = head;
         head = newnode;
 
-        if (tail = nullptr)
+        if (tail == nullptr)
             tail = head;
 
         size++;

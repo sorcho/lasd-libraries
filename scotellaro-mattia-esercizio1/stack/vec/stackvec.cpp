@@ -30,7 +30,7 @@ namespace lasd {
     bool StackVec<Data>::operator==(const StackVec& stk) const noexcept {
         if (index == stk.index) {
             for (ulong i = 0; i < index; i++) {
-                if (elements[i] != stk.elements[i]) {
+                if (elem[i] != stk.elem[i]) {
                     return false;
                 }
             }
@@ -49,7 +49,7 @@ namespace lasd {
     template<typename Data>
     const Data& StackVec<Data>::Top() const {
         if (index != 0) {
-            return elements[index - 1];
+            return elem[index - 1];
         } else {
             throw std::length_error("Errore: stack vuoto.");
         }
@@ -58,7 +58,7 @@ namespace lasd {
     template<typename Data>
     Data& StackVec<Data>::Top() {
         if (index != 0) {
-            return elements[index - 1];
+            return elem[index - 1];
         } else {
             throw std::length_error("Errore: stack vuoto.");
         }
@@ -78,7 +78,7 @@ namespace lasd {
     Data StackVec<Data>::TopNPop() {
         if (index != 0) {
             Reduce();
-            return std::move(elements[--index]);
+            return std::move(elem[--index]);
         } else {
             throw std::length_error("Errore: stack vuoto.");
         }
@@ -87,13 +87,13 @@ namespace lasd {
     template<typename Data>
     void StackVec<Data>::Push(const Data& data) {
         Expand();
-        elements[index++] = data;
+        elem[index++] = data;
     }
 
     template<typename Data>
     void StackVec<Data>::Push(Data&& data) {
         Expand();
-        elements[index++] = std::move(data);
+        elem[index++] = std::move(data);
     }
 
     // Specific member function (inherited from Container)
