@@ -141,10 +141,6 @@ protected:
 
   // Auxiliary member functions
 
-  /*void HeapSort(ulong size) noexcept;
-  void BuildHeap(ulong size) noexcept;
-  void Heapify(ulong size, ulong i) noexcept;*/
-
   void QuickSort(ulong, ulong) noexcept;
   ulong Partition(ulong, ulong) noexcept;
 

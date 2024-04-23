@@ -132,45 +132,9 @@ namespace lasd {
 
     template <typename Data>
     void SortableLinearContainer<Data>::Sort() noexcept {
-        QuickSort(0, size - 1);
+        if (!Container::Empty())
+            QuickSort(0, size - 1);
     }
-
-    // Auxiliary member functions
-    /*
-    template <typename Data>
-    void SortableLinearContainer<Data>::HeapSort(ulong size) noexcept {
-        BuildHeap(size);
-
-        for(ulong i = size - 1; i > 0; i--){
-            std::swap(operator[](0), operator[](i));
-            Heapify(i, 0);
-        }
-    }
-
-    template <typename Data>
-    void SortableLinearContainer<Data>::BuildHeap(ulong size) noexcept {
-        for(ulong i = (size/2) - 1; i >= 0; i--){
-            Heapify(size, i);
-        }
-    }
-
-    template <typename Data>
-    void SortableLinearContainer<Data>::Heapify(ulong size, ulong i) noexcept {
-        ulong m = i;
-        ulong l = (2*i)+1;
-        ulong r = (2*i)+2;
-
-        if((l<size) && (operator[](m) < operator[](l)))
-            m = l;
-
-        if((r<size) && (operator[](m) < operator[](r)))
-            m = r;
-
-        if(m != i){
-            std::swap(operator[](i), operator[](m));
-            Heapify(size, m);
-        }
-    }*/
 
     template <typename Data>
     void SortableLinearContainer<Data>::QuickSort(ulong p, ulong r) noexcept {

@@ -2,8 +2,6 @@
 #include <iostream>
 namespace lasd {
 
-    typedef unsigned long int ulong;
-
 /* ************************************************************************** */
 
     //------------ VECTOR -----------------
@@ -30,7 +28,7 @@ namespace lasd {
         ulong index = 0;
 
         cont.Map(
-            [this, &index](const Data& dat){
+            [this, &index](Data& dat){
                 elem[index++] = std::move(dat);
             });
     }
@@ -119,16 +117,16 @@ namespace lasd {
 
     template <typename Data>
     const Data& Vector<Data>::operator[](const ulong index) const {
-        if (index >= size)
-            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
+        if (index > size)
+            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size) + ").");
         else
             return elem[index];
     }
 
     template <typename Data>
     Data& Vector<Data>::operator[](const ulong index) {
-        if (index >= size)
-            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size - 1) + ").");
+        if (index > size)
+            throw std::out_of_range("Indice (" + std::to_string(index) + ") maggiore della grandezza massima (" + std::to_string(size) + ").");
         else
             return elem[index];
     }

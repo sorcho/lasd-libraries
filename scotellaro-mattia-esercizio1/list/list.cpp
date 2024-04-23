@@ -290,32 +290,24 @@ namespace lasd {
 
     template <typename Data>
     bool List<Data>::Remove(const Data& data) {
-        bool removed = false;
-        if(head == nullptr){
-            removed = false;
-        } else {
-            Node* current = head;
-            Node* prev = head;
-            while(current != nullptr && current->element != data){
-                prev = current;
-                current = current->next;
-            }
-            if(current == head) {
-                RemoveFromFront();
-                removed = true;
-            }else if(current==tail){
-                tail = prev;
-                prev->next = nullptr;
-                delete current;
-                removed = true;
-            }else{
-                prev->next = current->next;
-                current->next = nullptr;
-                delete current;
-                removed = true;
+        Node* last = nullptr;
+
+        for(Node** cur = &head; *cur != nullptr; last = *cur, cur = &((*cur) -> next)) {
+            if((*cur) -> element == data) {
+                Node* node = *cur;
+                *cur = node -> next;
+                node -> next = nullptr;
+                delete node;
+                size--;
+
+                if (tail == node) {
+                    tail = last;
+                }
+                return true;
             }
         }
-        return removed;
+
+        return false;
     }
     
     // Specific member functions (inherited from LinearContainer)
