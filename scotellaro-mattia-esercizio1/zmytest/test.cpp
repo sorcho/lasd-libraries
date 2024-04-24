@@ -210,7 +210,8 @@ bool TestCostruttori()
     }
 
     cout<<"\nTestCostruttore List->QueueLst(move): ";
-    lasd::QueueLst<int> qlst2(move(lst2));
+    lasd::Vector<int> tmpVec(lst2);
+    lasd::QueueLst<int> qlst2(move(tmpVec));
     for(uint i = 0; i < DimensioneContainer; i++) {
       if(lst2[i] != qlst2.HeadNDequeue()) {
         cout<<"ERRORE!\n";
@@ -259,8 +260,8 @@ bool TestCostruttori()
     }
 
     cout<<"\nTestCostruttore Vec->QueueLst(move): ";
-    lasd::Vector<int> tmpVec(vc2);
-    lasd::QueueLst<int> qlst7(move(tmpVec));
+    lasd::Vector<int> tmpVec2(vc2);
+    lasd::QueueLst<int> qlst7(move(tmpVec2));
     for(uint i = 0; i < DimensioneContainer; i++) {
       if(vc2[i] != qlst7.HeadNDequeue()) {
         cout<<"ERRORE!\n";
@@ -272,7 +273,6 @@ bool TestCostruttori()
         TestCostruttoriErrori |= false;
       }
     }
-    delete tmpVec;
 
     cout<<"\nTestCostruttore List->StackLst(copy): ";
     lasd::StackLst<int> stclst1(lst2);    
@@ -289,7 +289,8 @@ bool TestCostruttori()
 
 
     cout<<"\nTestCostruttore List->StackLst(move): ";
-    lasd::StackLst<int> stclst2(move(lst2));  
+    lasd::List<int> tmpLst(lst2);
+    lasd::StackLst<int> stclst2(move(tmpLst));  
     for(uint i = 0; i < DimensioneContainer; i++) {
       if(lst2[i] != stclst2.TopNPop()) {
           cout<<"ERRORE!\n";
@@ -311,7 +312,8 @@ bool TestCostruttori()
     }
 
     cout<<"\nTestCostruttore StackLst->StackLst(move): ";
-    lasd::StackLst<int> stclst4(move(stclst3));    
+    lasd::Vector<int> tmpVec3(vc2);
+    lasd::StackLst<int> stclst4(move(tmpVec3));    
     if(stclst3.Empty()) {
       cout<<"CORRETTO!\n";
     } else {
@@ -333,7 +335,8 @@ bool TestCostruttori()
     }
 
     cout<<"\nTestCostruttore Vec->StackLst(move): ";
-    lasd::StackLst<int> stclst6(move(vc2));    
+    lasd::Vector<int> tmpVec4(vc2);
+    lasd::StackLst<int> stclst6(move(tmpVec4));    
     for(uint i = 0; i < DimensioneContainer; i++) {
       if(vc2[i] != stclst6.TopNPop()) {
           cout<<"ERRORE!\n";
@@ -359,7 +362,8 @@ bool TestCostruttori()
     }
 
     cout<<"\nTestCostruttore Vec->List(move): ";
-    lasd::List<int> list2(move(vc2));    
+    lasd::Vector<int> tmpVec5(vc2);
+    lasd::List<int> list2(move(tmpVec5));    
     for(uint i = 0; i < DimensioneContainer; i++) {
       if(vc2[i] != list2[i]) {
           cout<<"ERRORE!\n";
