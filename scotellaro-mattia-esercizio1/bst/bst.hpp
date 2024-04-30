@@ -13,7 +13,11 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class BST {
+class BST :
+virtual public ClearableContainer,
+virtual public DictionaryContainer<Data>,
+virtual public BinaryTree<Data>,
+virtual public BinaryTreeLnk<Data>{
   // Must extend ClearableContainer,
   //             DictionaryContainer<Data>,
   //             BinaryTree<Data>,

@@ -14,7 +14,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class BinaryTreeVec {
+class BinaryTreeVec : virtual public MutableBinaryTree<Data>{
   // Must extend MutableBinaryTree<Data>
 
 private:
@@ -25,7 +25,7 @@ protected:
 
   // ...
 
-  struct NodeVec { // Must extend MutableNode
+  struct NodeVec : virtual MutableBinaryTree<Data>::MutableNode { // Must extend MutableNode
 
   private:
 
