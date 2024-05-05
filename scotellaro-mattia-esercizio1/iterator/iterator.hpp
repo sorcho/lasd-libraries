@@ -65,7 +65,7 @@ protected:
 public:
 
   // Destructor
-  virtual ~MutableIterator() = default
+  virtual ~MutableIterator() = default;
 
   /* ************************************************************************ */
 
@@ -147,7 +147,7 @@ protected:
 public:
 
   // Destructor
-  virtual ~ResettableIterator() = default
+  virtual ~ResettableIterator() = default;
 
   /* ************************************************************************ */
 

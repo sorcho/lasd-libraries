@@ -144,7 +144,12 @@ public:
 
 protected:
 
-  // Auxiliary functions, if necessary!
+  // Auxiliary functions
+
+  void PreOrderTraverse(TraverseFun, const Node*) const;
+  void PostOrderTraverse(TraverseFun, const Node*) const;
+  void InOrderTraverse(TraverseFun, const Node*) const;
+  void BreadthTraverse(TraverseFun, const Node*) const;
 
 };
 
@@ -201,7 +206,7 @@ public:
   /* ************************************************************************ */
 
   // Destructor
-  virtual ~MutableBinaryTree() = default
+  virtual ~MutableBinaryTree() = default;
 
   /* ************************************************************************ */
 
@@ -223,7 +228,7 @@ public:
 
   using typename MappableContainer<Data>::MapFun;
 
-  virtual void Map(MapFunc fun) override {
+  virtual void Map(MapFun fun) override {
     PreOrderMap(fun);
   }; // Override MappableContainer member
 
@@ -253,7 +258,12 @@ public:
 
 protected:
 
-  // Auxiliary functions, if necessary!
+  // Auxiliary functions
+
+  void PreOrderMap(MapFun, MutableNode*);
+  void PostOrderMap(MapFun, MutableNode*);
+  void InOrderMap(MapFun, MutableNode*);
+  void BreadthMap(MapFun, MutableNode*);
 
 };
 
@@ -270,7 +280,9 @@ private:
 
 protected:
 
-  // ...
+  const typename BinaryTree<Data>::Node* root=nullptr;
+  const typename BinaryTree<Data>::Node* current=nullptr;
+  StackVec<const typename BinaryTree<Data>::Node*> stack;
 
 public:
 
@@ -302,7 +314,9 @@ public:
 
   // Comparison operators
   bool operator==(const BTPreOrderIterator&) const noexcept;
-  bool operator!=(const BTPreOrderIterator&) const noexcept;
+  bool operator!=(const BTPreOrderIterator& poi) const noexcept {
+    return !(operator==(poi));
+  };
 
   /* ************************************************************************ */
 
