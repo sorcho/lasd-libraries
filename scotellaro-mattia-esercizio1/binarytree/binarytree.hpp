@@ -354,7 +354,7 @@ protected:
 public:
 
   // Specific constructors
-  BTPreOrderMutableIterator(MutableBinaryTree& bt) : BTPreOrderIterator<Data>(bt); // An iterator over a given mutable binary tree
+  BTPreOrderMutableIterator(MutableBinaryTree<Data>& bt) : BTPreOrderIterator<Data>(bt) {}; // An iterator over a given mutable binary tree
 
   /* ************************************************************************ */
 
@@ -395,7 +395,7 @@ public:
     if (this->current!=nullptr) {
       return const_cast<Data&>((this->current)->Element());
     } else {
-      throw std::out_of_range("Error: Out of range iterator"); 
+      throw std::out_of_range("Error: Iteratore fuori dal range."); 
     } 
   }; // (throw std::out_of_range when terminated)
 
@@ -442,7 +442,7 @@ public:
   BTPostOrderIterator& operator=(const BTPostOrderIterator&);
 
   // Move assignment
-  BTPostOrderIterator& operator=(BTPostOrderIterator&) noexcept;
+  BTPostOrderIterator& operator=(BTPostOrderIterator&&) noexcept;
 
   /* ************************************************************************ */
 
@@ -531,7 +531,7 @@ public:
     if(this->current!=nullptr) {
       return const_cast<Data&>((this->current)->Element());
     } else {
-      throw std::out_of_range("Out of range iterator"); 
+      throw std::out_of_range("Iteratore fuori dal range."); 
     } 
   }; // (throw std::out_of_range when terminated)
 
@@ -554,7 +554,7 @@ protected:
   const typename BinaryTree<Data>::Node* root=nullptr;
   StackVec<const typename BinaryTree<Data>::Node*> stack;
 
-  const typename BinaryTree<Data>::Node* MostLeftNode(const typename BinaryTree<Data>::Node* );
+  const typename BinaryTree<Data>::Node* MostLeftNode(const typename BinaryTree<Data>::Node*);
 
 public:
 
@@ -622,11 +622,7 @@ class BTInOrderMutableIterator : public virtual MutableIterator<Data>, public vi
 
 private:
 
-  // ...
-
 protected:
-
-  // ...
 
 public:
 
@@ -673,7 +669,7 @@ public:
     if(this->current!=nullptr) {
       return const_cast<Data&>((this->current)->Element());
     } else {
-      throw std::out_of_range("Out of range iterator"); 
+      throw std::out_of_range("Iteratore fuori dal range."); 
     } 
   }; // (throw std::out_of_range when terminated)
 
@@ -809,7 +805,7 @@ public:
     if(this->current!=nullptr) {
       return const_cast<Data&>((this->current)->Element());
     } else {
-      throw std::out_of_range("Out of range iterator"); 
+      throw std::out_of_range("Iteratore fuori dal range."); 
     } 
   };  // (throw std::out_of_range when terminated)
 
