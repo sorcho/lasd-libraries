@@ -65,21 +65,21 @@ namespace lasd {
         fun(node->Element());  
 
         if(node->HasLeftChild()) {
-            PreOrderTraverse(&node->LeftChild(), fun);
+            PreOrderTraverse(fun, &node->LeftChild());
         } 
 
         if(node->HasRightChild()) {
-            PreOrderTraverse(&node->RightChild(), fun);
+            PreOrderTraverse(fun, &node->RightChild());
         } 
     }
 
     template <typename Data>
     void BinaryTree<Data>::PostOrderTraverse(TraverseFun fun, const Node* node) const {
         if(node->HasLeftChild()) {
-            PostOrderTraverse(&node->LeftChild(), fun);
+            PostOrderTraverse(fun, &node->LeftChild());
         }
         if(node->HasRightChild()) {
-            PostOrderTraverse(&node->RightChild(), fun);
+            PostOrderTraverse(fun, &node->RightChild());
         }
 
         fun(node->Element());
@@ -88,13 +88,13 @@ namespace lasd {
     template <typename Data>
     void BinaryTree<Data>::InOrderTraverse(TraverseFun fun, const Node* node) const {
         if(node->HasLeftChild()) {
-            InOrderTraverse(&node->LeftChild(), fun);
+            InOrderTraverse(fun, &node->LeftChild());
         }
 
         fun(node->Element());
 
         if(node->HasRightChild()) {
-            InOrderTraverse(&node->RightChild(), fun);
+            InOrderTraverse(fun, &node->RightChild());
         }
     }
 
@@ -156,20 +156,20 @@ namespace lasd {
         fun(node->Element());
 
         if(node->HasLeftChild()) {
-            PreOrderMap(&node->LeftChild(), fun);
+            PreOrderMap(fun, &node->LeftChild());
         }
         if(node->HasRightChild()) {
-            PreOrderMap(&node->RightChild(), fun);
+            PreOrderMap(fun, &node->RightChild());
         }
     }
 
     template <typename Data>
     void MutableBinaryTree<Data>::PostOrderMap(MapFun fun, MutableNode* node) {
         if(node->HasLeftChild()) {
-            PostOrderMap(&node->LeftChild(), fun);
+            PostOrderMap(fun, &node->LeftChild());
         }
         if(node->HasRightChild()) {
-            PostOrderMap(&node->RightChild(), fun);
+            PostOrderMap(fun, &node->RightChild());
         }
 
         fun(node->Element());
@@ -178,13 +178,13 @@ namespace lasd {
     template <typename Data>
     void MutableBinaryTree<Data>::InOrderMap(MapFun fun, MutableNode* node) {
         if(node->HasLeftChild()) {
-            InOrderMap(&node->LeftChild(), fun);
+            InOrderMap(fun, &node->LeftChild());
         }
 
         fun(node->Element());
 
         if(node->HasRightChild()) {
-            InOrderMap(&node->RightChild(), fun);
+            InOrderMap(fun, &node->RightChild());
     }
     }
 

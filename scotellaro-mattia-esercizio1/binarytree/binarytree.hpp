@@ -580,7 +580,7 @@ public:
   BTInOrderIterator& operator=(const BTInOrderIterator&);
 
   // Move assignment
-  BTInOrderIterator& operator=(BTInOrderIterator&&) noexcept;;
+  BTInOrderIterator& operator=(BTInOrderIterator&&) noexcept;
 
   /* ************************************************************************ */
 

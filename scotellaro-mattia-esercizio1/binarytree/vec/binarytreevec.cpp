@@ -6,14 +6,14 @@ namespace lasd {
     // ------------ NODE VEC -------------
 
     template <typename Data>
-    BinaryTreeVec<Data>::NodeVec::NodeVec(const Data &data, int i, BinaryTreeVec<Data>* bt) {
+    BinaryTreeVec<Data>::NodeVec::NodeVec(const Data &data, ulong i, BinaryTreeVec<Data>* bt) {
         this->bt = bt;
         this->index = i;
         bt->elem[i] = data;  
     }
 
     template <typename Data>
-    BinaryTreeVec<Data>::NodeVec::NodeVec(Data&& data, int i, BinaryTreeVec<Data>* bt) {
+    BinaryTreeVec<Data>::NodeVec::NodeVec(Data&& data, ulong i, BinaryTreeVec<Data>* bt) {
         std::swap(this->bt, bt);
         std::swap(this->index, i);
         std::swap(bt->elem[i], data);  
@@ -39,7 +39,7 @@ namespace lasd {
     template <typename Data>
     typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::LeftChild() {
         if(HasLeftChild()) {
-            return (bt->Nodes[index*2+1]);
+            return (bt->nodes[index*2+1]);
         }
         else throw std::out_of_range("Errore: figlio sinistro inesistente.");
     }
@@ -47,7 +47,7 @@ namespace lasd {
     template <typename Data>
     const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::LeftChild() const {
         if(HasLeftChild()) {
-            return (bt->Nodes[index*2+1]);
+            return (bt->nodes[index*2+1]);
         }
         else throw std::out_of_range("Errore: figlio sinistro inesistente.");
     }
@@ -55,7 +55,7 @@ namespace lasd {
     template <typename Data>
     const typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() const {
         if(HasRightChild()) {
-            return (bt->Nodes[index*2+2]);
+            return (bt->nodes[index*2+2]);
         }
         else throw std::out_of_range("Errore: figlio destro inesistente.");
     }
@@ -63,7 +63,7 @@ namespace lasd {
     template <typename Data>
     typename BinaryTreeVec<Data>::NodeVec& BinaryTreeVec<Data>::NodeVec::RightChild() {
         if(HasRightChild()) {
-            return (bt->Nodes[index*2+2]);
+            return (bt->nodes[index*2+2]);
         }
         else throw std::out_of_range("Errore: figlio destro inesistente.");
     }
@@ -108,8 +108,8 @@ namespace lasd {
         std::copy(btv.elem, btv.elem + size, elem);
         std::copy(btv.nodes, btv.nodes + size, nodes);
 
-        for(int i = 0; i < btv.Size(); i++) {
-            nodes[i].btv = this;
+        for(ulong i = 0; i < btv.Size(); i++) {
+            nodes[i].bt = this;
         }
     }
 
@@ -119,8 +119,8 @@ namespace lasd {
         std::swap(elem, btv.elem);
         std::swap(nodes, btv.nodes);
 
-        for(int i = 0; i < size; i++) {
-            nodes[i].btv = this;
+        for(ulong i = 0; i < size; i++) {
+            nodes[i].bt = this;
         }
     }
 
@@ -131,7 +131,7 @@ namespace lasd {
         nodes = new NodeVec[btv.Size()];
         std::copy(btv.elem, btv.elem + size, elem);
         std::copy(btv.nodes, btv.nodes + size, nodes);
-        for(int i = 0; i < btv.Size(); i++) {
+        for(ulong i = 0; i < btv.Size(); i++) {
             nodes[i].bt = this;
         }
         return *this;
@@ -142,10 +142,10 @@ namespace lasd {
         std::swap(this->size, btv.size);
         std::swap(elem, btv.elem);
         std::swap(nodes, btv.nodes);
-        for(int i = 0; i < size; i++) {
+        for(ulong i = 0; i < size; i++) {
             nodes[i].bt = this;
         }
-        for(int i = 0; i < btv.size; i++) {
+        for(ulong i = 0; i < btv.size; i++) {
             btv.nodes[i].bt = &btv;
         }
         return *this;

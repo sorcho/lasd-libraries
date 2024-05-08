@@ -40,15 +40,15 @@ protected:
   public:
 
     BinaryTreeVec<Data>* bt = nullptr;
-    int index;
+    ulong index;
 
     NodeVec() {
       bt = nullptr;
       index = 0;
     }
 
-    NodeVec(const Data&, int, BinaryTreeVec<Data>*);
-    NodeVec(Data&&, int, BinaryTreeVec<Data>*);
+    NodeVec(const Data&, ulong, BinaryTreeVec<Data>*);
+    NodeVec(Data&&, ulong, BinaryTreeVec<Data>*);
 
     virtual ~NodeVec() = default;
 
@@ -176,7 +176,33 @@ public:
 
 protected:
 
-  // Auxiliary functions, if necessary!
+  // Auxiliary functions
+  // Gestione del diamond problem
+
+  void PreOrderTraverse(TraverseFun fun) const override{
+    BinaryTree<Data>::PreOrderTraverse(fun);
+  }
+
+  void PostOrderTraverse(TraverseFun fun) const override{
+    BinaryTree<Data>::PostOrderTraverse(fun);
+  }
+
+  void Traverse(TraverseFun fun) const override{
+    BinaryTree<Data>::Traverse(fun); 
+  }
+
+  void PreOrderMap(MapFun fun) override{
+    MutableBinaryTree<Data>::PreOrderMap(fun);
+  }
+
+  void PostOrderMap(MapFun fun) override{
+    MutableBinaryTree<Data>::PostOrderMap(fun);
+  }
+
+  void Map(MapFun fun) override{
+    MutableBinaryTree<Data>::Map(fun); 
+  }
+
 
 };
 
