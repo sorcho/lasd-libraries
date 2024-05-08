@@ -616,7 +616,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class BTInOrderMutableIterator {
+class BTInOrderMutableIterator : public virtual MutableIterator<Data>, public virtual BTInOrderIterator<Data>{
   // Must extend MutableIterator<Data>,
   //             BTInOrderIterator<Data>
 
@@ -631,47 +631,58 @@ protected:
 public:
 
   // Specific constructors
-  // BTInOrderMutableIterator(argument) specifiers; // An iterator over a given mutable binary tree
+  BTInOrderMutableIterator(MutableBinaryTree<Data>& mbt) : BTInOrderIterator<Data>(mbt) {}; // An iterator over a given mutable binary tree
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // BTInOrderMutableIterator(argument) specifiers;
+  BTInOrderMutableIterator(const BTInOrderMutableIterator& imi) : BTInOrderIterator<Data>(imi) {};
 
   // Move constructor
-  // BTInOrderMutableIterator(argument) specifiers;
+  BTInOrderMutableIterator(BTInOrderMutableIterator&& imi) noexcept : BTInOrderIterator<Data>(std::move(imi)) {};
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~BTInOrderMutableIterator() specifiers;
+  virtual ~BTInOrderMutableIterator() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  inline BTInOrderMutableIterator& operator=(const BTInOrderMutableIterator&);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  inline BTInOrderMutableIterator& operator=(BTInOrderMutableIterator&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  inline bool operator==(const BTInOrderMutableIterator& imi) const noexcept { 
+    return BTInOrderIterator<Data>::operator==(imi); 
+  };
+
+  inline bool operator!=(const BTInOrderMutableIterator& imi) const noexcept { 
+    return !(operator==(imi)); 
+  };
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from MutableIterator)
 
-  // type operator*() specifiers; // (throw std::out_of_range when terminated)
+  Data& operator*() override {
+    if(this->current!=nullptr) {
+      return const_cast<Data&>((this->current)->Element());
+    } else {
+      throw std::out_of_range("Out of range iterator"); 
+    } 
+  }; // (throw std::out_of_range when terminated)
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class BTBreadthIterator {
+class BTBreadthIterator : public virtual ForwardIterator<Data>, public virtual ResettableIterator<Data>{
   // Must extend ForwardIterator<Data>,
   //             ResettableIterator<Data>
 
@@ -681,114 +692,126 @@ private:
 
 protected:
 
-  // ...
+  const typename BinaryTree<Data>::Node* current=nullptr;
+  const typename BinaryTree<Data>::Node* root=nullptr;
+  QueueVec<const typename BinaryTree<Data>::Node*> queue;
 
 public:
 
   // Specific constructors
-  // BTBreadthIterator(argument) specifiers; // An iterator over a given binary tree
+  BTBreadthIterator(const BinaryTree<Data>&); // An iterator over a given binary tree
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // BTBreadthIterator(argument) specifiers;
+  BTBreadthIterator(const BTBreadthIterator&);
 
   // Move constructor
-  // BTBreadthIterator(argument) specifiers;
+  BTBreadthIterator(BTBreadthIterator&&) noexcept;
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~BTBreadthIterator() specifiers;
+  virtual ~BTBreadthIterator() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  BTBreadthIterator& operator=(const BTBreadthIterator&);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  BTBreadthIterator& operator=(BTBreadthIterator&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  bool operator==(const BTBreadthIterator&) const noexcept;
+  
+  inline bool operator!=(const BTBreadthIterator& bi) const noexcept { 
+    return !(operator==(bi)); 
+  };
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from Iterator)
 
-  // type operator*() specifiers; // (throw std::out_of_range when terminated)
+  const Data& operator*() const; // (throw std::out_of_range when terminated)
 
-  // type Terminated() specifiers; // (should not throw exceptions)
+  bool Terminated() const noexcept override; // (should not throw exceptions)
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from ForwardIterator)
 
-  // type operator++() specifiers; // (throw std::out_of_range when terminated)
+  BTBreadthIterator& operator++() override; // (throw std::out_of_range when terminated)
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from ResettableIterator)
 
-  // type Reset() specifiers; // (should not throw exceptions)
+  void Reset() noexcept override; // (should not throw exceptions)
 
 };
 
 /* ************************************************************************** */
 
 template <typename Data>
-class BTBreadthMutableIterator {
+class BTBreadthMutableIterator : virtual public MutableIterator<Data>, virtual public BTBreadthIterator<Data>{
   // Must extend MutableIterator<Data>,
   //             BTBreadthIterator<Data>
 
 private:
 
-  // ...
-
 protected:
-
-  // ...
 
 public:
 
   // Specific constructors
-  // BTBreadthMutableIterator(argument) specifiers; // An iterator over a given mutable binary tree
+  BTBreadthMutableIterator(MutableBinaryTree<Data>& mbt) : BTBreadthIterator<Data>(mbt) {}; // An iterator over a given mutable binary tree
 
   /* ************************************************************************ */
 
   // Copy constructor
-  // BTBreadthMutableIterator(argument) specifiers;
+  BTBreadthMutableIterator(const BTBreadthMutableIterator& bmi) : BTBreadthIterator<Data>(bmi) {;};
 
   // Move constructor
-  // BTBreadthMutableIterator(argument) specifiers;
+  BTBreadthMutableIterator(BTBreadthMutableIterator&& bmi) noexcept : BTBreadthIterator<Data>(std::move(bmi)) {;};
 
   /* ************************************************************************ */
 
   // Destructor
-  // ~BTBreadthMutableIterator() specifiers;
+  ~BTBreadthMutableIterator() = default;
 
   /* ************************************************************************ */
 
   // Copy assignment
-  // type operator=(argument) specifiers;
+  BTBreadthMutableIterator& operator=(const BTBreadthMutableIterator&);
 
   // Move assignment
-  // type operator=(argument) specifiers;
+  BTBreadthMutableIterator& operator=(BTBreadthMutableIterator&&) noexcept;
 
   /* ************************************************************************ */
 
   // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+  inline bool operator==(const BTBreadthMutableIterator& bmi) const noexcept { 
+    return BTBreadthIterator<Data>::operator==(bmi); 
+  };
+
+  inline bool operator!=(const BTBreadthMutableIterator& bmi) const noexcept { 
+    return !(operator==(bmi)); 
+  };
 
   /* ************************************************************************ */
 
   // Specific member functions (inherited from MutableIterator)
 
-  // type operator*() specifiers; // (throw std::out_of_range when terminated)
+  Data& operator*() override {
+    if(this->current!=nullptr) {
+      return const_cast<Data&>((this->current)->Element());
+    } else {
+      throw std::out_of_range("Out of range iterator"); 
+    } 
+  };  // (throw std::out_of_range when terminated)
 
 };
 
