@@ -1249,38 +1249,38 @@ bool TestBTLnk()
   }
   cout<<lines++<<" MAP VETTORE:"; 
   vettore1.Traverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   lasd::BinaryTreeLnk<int> bintrelnk(std::move(vettore1));
   cout<<"\n"<<lines++<<" TRAVERSE:";
   bintrelnk.Traverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" PREORDERTRAVERSE:"; 
   bintrelnk.PreOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" POSTORDERTRAVERSE:"; 
   bintrelnk.PostOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" INORDERTRAVERSE:"; 
   bintrelnk.InOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" BREADTHORDERTRAVERSE:"; 
   bintrelnk.BreadthTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
@@ -1489,38 +1489,38 @@ bool TestBST()
   }
   cout<<lines++<<" TRAVERSE VETTORE:"; 
   vettore1.Traverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   lasd::BST<int> binserTree(std::move(vettore1));
   cout<<lines++<<" TRAVERSE:";
   binserTree.Traverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" PREORDERTRAVERSE:"; 
   binserTree.PreOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" POSTORDERTRAVERSE:"; 
   binserTree.PostOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" INORDERTRAVERSE:"; 
   binserTree.InOrderTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
   cout<<"\n"<<lines++<<" BREADTHTRAVERSE:"; 
   binserTree.BreadthTraverse(
-    [](int dat){
+    [](const int& dat){
       cout<<"->"<<dat;
     }
   );
