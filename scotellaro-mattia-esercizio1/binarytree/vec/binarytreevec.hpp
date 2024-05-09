@@ -174,8 +174,6 @@ public:
     Vector<Data>::PreOrderMap(fun);
   }; // Override BreadthMappableContainer member
 
-protected:
-
   // Auxiliary functions
   // Gestione del diamond problem
 

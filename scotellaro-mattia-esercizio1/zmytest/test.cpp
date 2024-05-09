@@ -18,6 +18,7 @@ uniform_int_distribution<int> RandomNumber(0, 100);
 
 void mytest() {
   TestEsercizio1();
+  TestEsercizio2();
 }
 
 bool TestCostruttori()
@@ -778,10 +779,777 @@ bool TestQueueVec()
   return TestQueueVec;
 }
 
-void TestEsercizio1(){
+bool TestIteratori() {
+  bool testIteratori = true;
+  int lines = 1;
+  cout<<"\n\nBegin of (BST into) Iterator Test: "<<endl;
+
+  lasd::BinaryTreeLnk<int> btlnk;
+  lasd::BTInOrderIterator<int> inOrderBSTlnk(btlnk);
+  if(inOrderBSTlnk.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<"Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+  lasd::BTInOrderIterator<int> inOrderBSTmovelnk(std::move(btlnk));
+  if(inOrderBSTmovelnk.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+
+  lasd::BinaryTreeVec<int> btvec;
+  lasd::BTInOrderIterator<int> inOrderBSTvec(btvec);
+  if(inOrderBSTvec.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<"Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+  lasd::BTInOrderIterator<int> inOrderBSTmovevec(std::move(btvec));
+  if(inOrderBSTmovevec.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+
+  lasd::List<int> lst;
+  for(int i=0; i<6; i++) {
+    lst.InsertAtBack(i);
+  }
+
+  lasd::BinaryTreeLnk<int> btLnk(lst);
+
+  cout<<"TRAVERSE:"<<endl;
+  cout<<"Expected: 0->1->3->4->2->5->"<<endl;
+  cout<<"Traverse ottenuta: ";
+  btLnk.Traverse(
+    [](const int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  cout<<endl;
+
+  cout<<"PRE_ORDER_TRAVERSE:"<<endl;
+  cout<<"Expected: 0->1->3->4->2->5->"<<endl;
+  cout<<"PreOrderTraverse: ";
+  btLnk.PreOrderTraverse(
+    [](const int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTPreOrderIterator<int> itrPre(btLnk);
+  cout<<"\nPreOrderIterator: ";
+  while(!(itrPre.Terminated())){
+    cout<<*itrPre<<"->";
+    ++itrPre;
+  }
+  cout<<endl;
+
+  cout<<"POST_ORDER_TRAVERSE:"<<endl;
+  cout<<"Expected: 3->4->1->5->2->0->"<<endl;
+  cout<<"PostOrderTraverse: ";
+  btLnk.PostOrderTraverse(
+    [](const int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTPostOrderIterator<int> itrPost(btLnk);
+  cout<<"\nPostOrderIterator: ";
+  while(!(itrPost.Terminated())){
+    cout<<*itrPost<<"->";
+    ++itrPost;
+  }
+  cout<<endl;
+
+  cout<<"IN_ORDER_TRAVERSE:"<<endl;
+  cout<<"Expected: 3->1->4->0->5->2->"<<endl;
+  cout<<"InOrderTraverse: ";
+  btLnk.InOrderTraverse(
+    [](const int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTInOrderIterator<int> itrIn(btLnk);
+  cout<<"\nInOrderIterator: ";
+  while(!(itrIn.Terminated())){
+    cout<<*itrIn<<"->";
+    ++itrIn;
+  }
+  cout<<endl;
+
+  cout<<"BREADTH_TRAVERSE:"<<endl;
+  cout<<"Expected: 0->1->2->3->4->5->"<<endl;
+  cout<<"BreadthTraverse: ";
+  btLnk.BreadthTraverse(
+    [](const int& dat){
+      cout<<dat<<"->";
+    }
+  );
+  lasd::BTBreadthIterator<int> itrBreadth(btLnk);
+  cout<<"\nBreadthOrderIterator: ";
+  while(!(itrBreadth.Terminated())){
+    cout<<*itrBreadth<<"->";
+    ++itrBreadth;
+  }
+  cout<<endl;
+
+  lasd::SortableVector<int> vec(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec.Size(); i++) {
+    vec[i] = RandomNumber(gen);
+  }
+  vec.Sort();
+  lasd::BinaryTreeVec<int> btvec1(vec);
+  lasd::BTBreadthIterator<int> breadthIterVec(btvec1);
+  int next = 0;
+  while(!breadthIterVec.Terminated()){
+    int previous = *breadthIterVec;
+    if(!(++breadthIterVec).Terminated()){
+      next = *breadthIterVec;
+    }
+    if(previous <= next) {
+      testIteratori &= true;
+    } else {
+      testIteratori &= false;
+      cout<<lines++<<" BTBredthIterator NON costruito correttamente da BTVec: Error!"<<endl;
+      break;
+    }
+  }
+  if(testIteratori == true) {
+    cout<<lines++<<" BTBredthIterator costruito correttamente da BTVec: Correct!"<<endl;    
+  }
+  breadthIterVec.Reset();
+  if(*breadthIterVec == vec[0]) {
+    cout<<lines++<<" L'iteratore è stato resettato correttamente: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" L'iteratore NON è stato resettato correttamente: Error!"<<endl;
+    testIteratori &= false;
+  }
+  lasd::BinaryTreeLnk<int> btlnk1;
+  lasd::BTInOrderIterator<int> postOrderBSTlnk(btlnk1);
+  if(postOrderBSTlnk.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<"Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+  lasd::BTInOrderIterator<int> postOrderBSTmovelnk(std::move(btlnk));
+  if(postOrderBSTlnk.Terminated()) {
+    cout<<lines++<<" Iterator is terminated: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Iterator is not terminated: Error!"<<endl;
+    testIteratori &= false;
+  }
+
+  return testIteratori;
+}
+
+bool TestBTVec()
+{
+  bool testBTVec = true;
+  int lines = 1;
+  cout<<"\n\nBegin of BTVec Test: "<<endl;
+  lasd::List<int>lst;
+  for(int i = 0; i < RandomNumber(gen) + 1; i++){
+    lst.Insert(RandomNumber(gen));
+  }
+  lasd::BinaryTreeVec<int>btvec1(lst);
+  lasd::BinaryTreeVec<int>btvec2(std::move(lst));
+  if(btvec1 == btvec2) {
+    cout<<lines++<<" Two BtVec are equals: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Two BtVec are NOT equals: Error!"<<endl;
+    testBTVec &= false;   
+  }
+  btvec2.Clear();
+  btvec1 = btvec2;
+  if(btvec1.Empty()) {
+    cout<<lines++<<" BTVec1 is now Empty: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" BTVec1 is NOT Empty: Error!"<<endl;
+    testBTVec &= false;   
+  }
+  if(btvec1 == btvec2) {
+    cout<<lines++<<" Two BtVec are equals: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Two BtVec are NOT equals: Error!"<<endl;
+    testBTVec &= false;   
+  }
+  lasd::List<double> vec;
+  lasd::BinaryTreeVec<double> btvec3;
+  btvec3 = std::move(vec);
+  try{
+    btvec3.Root();
+  } catch (std::length_error const&) {
+    cout<<lines++<<" leng_error called BTVec is Empty, doesn't have root: Correct!"<<endl; 
+  } catch (std::exception const&) {
+    cout<<lines++<<" Wrong exception called: Error!"<<endl; 
+    testBTVec &= false;     
+  }
+  lasd::Vector<double> vec1(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec1.Size() - 1; i++){
+    vec1[i] = RandomNumber(gen);
+  }
+  //creo una ripetizione
+  vec1[0]++;
+  vec1[vec1.Size() - 1] = vec1[0];
+  lasd::BinaryTreeLnk<double> btlnk1(vec1);
+  lasd::BinaryTreeVec<double> btvec4(btlnk1);
+  double accumulator1 = 0;
+  cout<<" Printing new BTLnk :";
+  btlnk1.Traverse(
+    [&accumulator1](const double& dat){
+      cout<<dat<<"->";
+      accumulator1 += dat;
+    }
+  );
+  cout<<"\n BTLnk's all value sum is: "<<accumulator1<<endl;
+
+  double accumulator2 = 0;
+  cout<<" Printing new BTVec :";
+  btvec4.Traverse(
+    [&accumulator2](const double& dat){
+      cout<<dat<<"->";
+      accumulator2 += dat;
+    }
+  );
+  cout<<"\n BTVec(BTLnk)'s all value sum is: "<<accumulator2<<endl;
+  if(accumulator1 == accumulator2) {
+    cout<<lines++<<" BTVec & BTLnk are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" BTVec & BTLnk are NOT equals: Error!"<<endl;   
+    testBTVec &= false;     
+  }
+
+  lasd::BST<double> BST1(btvec4);
+  double accumulator3 = 0;
+  cout<<" Printing new BST :";
+  BST1.Traverse(
+    [&accumulator3](double dat){
+      cout<<dat<<"->";
+      accumulator3 += dat;
+    }
+  );
+  cout<<"\n BST's all value sum is: "<<accumulator3<<endl;
+  if(accumulator2 != accumulator3) {
+    cout<<lines++<<" BST & (BTLnk & BTVec) are NOT equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" BST & (BTLnk & BTVec) are equals: Error!"<<endl;
+    testBTVec &= false;           
+  }
+
+  lasd::Vector<int> vec3(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec3.Size(); i++){
+    vec3[i] = RandomNumber(gen);
+  }
+  lasd::Vector<int> vec4(vec3);
+  lasd::BinaryTreeLnk<int> btlnk5(std::move(vec3));
+  lasd::BinaryTreeVec<int> btvec5(std::move(vec4));
+  if(btlnk5.lasd::BinaryTree<int>::operator==(btvec5)){
+    cout<<lines++<<" btlnk and bvec(move assignament from the same vector) are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" btlnk and bvec(move assignament from the same vector) are NOT equals: Error!"<<endl;       
+  }
+  lasd::BinaryTreeLnk<int> btlnk6(std::move(btlnk5));
+  lasd::BinaryTreeVec<int> btvec6(std::move(btvec5));  
+  if(btlnk6.lasd::BinaryTree<int>::operator==(btvec6)){
+    cout<<lines++<<" btlnk(from move(btvec)) and btvec are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" btlnk(from move(btvec)) and btvec are NOT equals: Error!"<<endl;       
+  }
+
+  lasd::List<int>lista;
+  lista.Insert(RandomNumber(gen));
+  lista.Insert(RandomNumber(gen));
+
+  lasd::BinaryTreeVec<int>btvec7(std::move(lista));
+  lasd::List<int>list(btvec7);
+  for(ulong i=0; i< list.Size();i++) {
+    cout<<lines++<<" extracted value from List(BTLnk): "<<list[i]<<" Correct!"<<endl;
+  }
+
+  lasd::List<int> list1;
+  for(int i = 0; i < (RandomNumber(gen)%10) + 5; i++) {
+    list1.Insert(RandomNumber(gen));
+  }
+  cout<<lines++<<" MAP LISTA:"; 
+  list1.Map(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  lasd::BinaryTreeVec<int> bintvec(list1);
+  cout<<"\n"<<lines++<<" MAP:";
+  bintvec.Map(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" PREORDERMAP:"; 
+  bintvec.PreOrderMap(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" POSTORDERMAP:"; 
+  bintvec.PostOrderMap(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" INORDERMAP:"; 
+  bintvec.InOrderMap(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" BREADTHORDERMAP:"; 
+  bintvec.BreadthMap(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+
+
+  return testBTVec;
+}
+
+bool TestBTLnk()
+{
+  bool testBTLnk= true;
+  int lines = 1;
+  cout<<"\n\nBegin of BTLnk Test: "<<endl;
+  lasd::List<int>lst;
+  for(int i = 0; i < RandomNumber(gen) + 1; i++){
+    lst.Insert(RandomNumber(gen));
+  }
+  lasd::BinaryTreeLnk<int>btlnk1(lst);
+  lasd::BinaryTreeLnk<int>btlnk2(std::move(lst));
+  if(btlnk1 == btlnk2) {
+    cout<<lines++<<" Two BtLnk are equals: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Two BtLnk are NOT equals: Error!"<<endl;
+    testBTLnk &= false;   
+  }
+  btlnk2.Clear();
+  btlnk1 = btlnk2;
+  if(btlnk1.Empty()) {
+    cout<<lines++<<" BtLnk1 is now Empty: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" BtLnk1 is NOT Empty: Error!"<<endl;
+    testBTLnk &= false;   
+  }
+  if(btlnk1 == btlnk2) {
+    cout<<lines++<<" Two BtLnk are equals: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Two BtLnk are NOT equals: Error!"<<endl;
+    testBTLnk &= false;   
+  }
+  lasd::List<double> vec;
+  lasd::BinaryTreeLnk<double> btlnk3;
+  btlnk3 = vec;
+  try{
+    btlnk3.Root();
+  } catch (std::length_error const&) {
+    cout<<lines++<<" leng_error called BTLnk is Empty, doesn't have root: Correct!"<<endl; 
+  } catch (std::exception const&) {
+    cout<<lines++<<" Wrong exception called: Error!"<<endl; 
+    testBTLnk &= false;     
+  }
+  lasd::Vector<double> vec1(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec1.Size() - 1; i++){
+    vec1[i] = RandomNumber(gen);
+  }
+  //creo una ripetizione
+  vec1[0]++;
+  vec1[vec1.Size() - 1] = vec1[0];
+  lasd::BinaryTreeLnk<double> btlnk4(std::move(vec1));
+  lasd::BinaryTreeVec<double> btvec1(btlnk4);
+  double accumulator1 = 0;
+  cout<<" Printing new BTLnk :";
+  btlnk4.Map(
+    [&accumulator1](double dat){
+      cout<<dat<<"->";
+      accumulator1 += dat;
+    }
+  );
+  cout<<"\n BTLnk's all value sum is: "<<accumulator1<<endl;
+
+  double accumulator2 = 0;
+  cout<<" Printing new BTVec :";
+  btvec1.Map(
+    [&accumulator2](double dat){
+      cout<<dat<<"->";
+      accumulator2 += dat;
+    }
+  );
+  cout<<"\n BTVec(BTLnk)'s all value sum is: "<<accumulator2<<endl;
+  if(accumulator1 == accumulator2) {
+    cout<<lines++<<" BTVec & BTLnk are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" BTVec & BTLnk are NOT equals: Error!"<<endl;   
+    testBTLnk &= false;     
+  }
+
+  lasd::BST<double> BST1(std::move(btlnk4));
+  double accumulator3 = 0;
+  cout<<" Printing new BST :";
+  BST1.Traverse(
+    [&accumulator3](const double& dat){
+      cout<<dat<<"->";
+      accumulator3 += dat;
+    }
+  );
+  cout<<"\n BST's all value sum is: "<<accumulator3<<endl;
+  if(accumulator2 != accumulator3) {
+    cout<<lines++<<" BST & (BTLnk & BTVec) are NOT equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" BST & (BTLnk & BTVec) are equals: Error!"<<endl;
+    testBTLnk &= false;           
+  }
+
+  lasd::Vector<int> vec3(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec3.Size(); i++){
+    vec3[i] = RandomNumber(gen);
+  }
+  lasd::BinaryTreeLnk<int> btlnk5(vec3);
+  lasd::BinaryTreeVec<int> btvec2(vec3);
+  lasd::BinaryTreeLnk<int> btlnk6(btlnk5);
+  lasd::BinaryTreeVec<int> btvec3(btvec2);  
+  if(btlnk5.lasd::BinaryTree<int>::operator==(btvec2)){
+    cout<<lines++<<" btlnk and bvec(copy assignament from the same vector) are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" btlnk and bvec(copy assignament from the same vector) are NOT equals: Error!"<<endl;       
+  }
+  if(btlnk6.lasd::BinaryTree<int>::operator==(btvec3)){
+    cout<<lines++<<" btlnk(from btvec) and btvec are equals: Correct!"<<endl;    
+  } else {
+    cout<<lines++<<" btlnk(from btvec) and btvec are NOT equals: Error!"<<endl;       
+  }
+
+  lasd::Vector<int>vector(2);
+  vector[0] = RandomNumber(gen);
+  vector[1] = RandomNumber(gen);
+  lasd::BinaryTreeLnk<int>btlnk7(std::move(vector));
+  lasd::List<int>lista(btlnk7);
+  for(ulong i=0; i< lista.Size();i++) {
+    cout<<lines++<<" extracted value from List(BTLnk): "<<lista[i]<<" Correct!"<<endl;
+  }
+  lasd::Vector<int>vettore(std::move(btlnk7));
+  for(ulong i=0; i< vettore.Size();i++) {
+    cout<<lines++<<" extracted value from Vector(BTLnk): "<<vettore[i]<<" Correct!"<<endl;
+  }
+
+  lasd::Vector<int> vettore1((RandomNumber(gen)%10) + 5);
+  for(ulong i = 0; i < vettore1.Size(); i++) {
+    vettore1[i] = RandomNumber(gen);
+  }
+  cout<<lines++<<" MAP VETTORE:"; 
+  vettore1.Traverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  lasd::BinaryTreeLnk<int> bintrelnk(std::move(vettore1));
+  cout<<"\n"<<lines++<<" TRAVERSE:";
+  bintrelnk.Traverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" PREORDERTRAVERSE:"; 
+  bintrelnk.PreOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" POSTORDERTRAVERSE:"; 
+  bintrelnk.PostOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" INORDERTRAVERSE:"; 
+  bintrelnk.InOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" BREADTHORDERTRAVERSE:"; 
+  bintrelnk.BreadthTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+
+  return testBTLnk;
+}
+
+bool TestBST()
+{
+  bool testBST = true;
+  int lines = 1;
+  cout<<"\n\nBegin of BST Test: "<<endl;
+
+  lasd::Vector<int> vec1;
+  lasd::BST<int> bst1(vec1);
+  bst1.Insert(1);
+  if(bst1.Max() == 1) {
+    cout<<lines++<<" Max is (obtained Max)'"<<bst1.Max()<<"': Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Max is (obtained Min)'"<<bst1.Max()<<": Error!"<<endl;
+    testBST &= false;
+  }
+
+  lasd::Vector<int> vec2(RandomNumber(gen) + 1);
+  for(ulong i = 0; i < vec2.Size(); i ++) {
+    vec2[i] = RandomNumber(gen);
+  }
+  bst1.Clear();
+  bst1.InsertAll(vec2);
+  int ExstactedValue = bst1.MaxNRemove();
+  while(!bst1.Empty()) {
+    if(bst1.Max() > ExstactedValue) {
+      break;
+      cout<<lines++<<" Previous ExtractedMax '"<<ExstactedValue<<"' > Actual ExtractedMax '"<<bst1.Max()<<"': Error!"<<endl;
+      testBST &= false;
+    } else {
+      cout<<lines++<<" Previous ExtractedMax '"<<ExstactedValue<<"' < Actual ExtractedMax '"<<bst1.Max()<<"': Correct!"<<endl;
+    }  
+    ExstactedValue = bst1.MaxNRemove();
+  }
+
+  lasd::BST<int> bst2;
+  if(bst1 == bst2) {
+    cout<<lines++<<" Two empty BST are equal: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Two empty BST are NOT equal: Error!"<<endl;
+    testBST &= false;
+  }
+
+  lasd::BST<int> bst3(vec2);
+  bst1 = bst3;
+  if(bst1 == bst3) {
+    cout<<lines++<<" BST and its BST copy assignament are equal: Correct!"<<endl;  
+  } else {
+    cout<<lines++<<" BST and its BST copy assignament are NOT equal: Error!"<<endl;
+    testBST&= false;
+  }
+  bst2 = std::move(bst3);
+  if(bst2 != bst3) {
+    cout<<lines++<<" BST and its BST move assignament are NOT equal: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" BST and its BST move assignament are equal: Erroe!"<<endl;
+    testBST &= false;
+  }
+  if(bst3.Empty()) {
+    cout<<lines++<<" Moved BST is now Empty: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Moved BST is NOT Empty: Error!"<<endl;
+    testBST &= false;
+  }
+  if(bst1 == bst2) {
+    cout<<lines++<<" BST1 and BST2 are equal: Correct!"<<endl;
+  } else {
+    cout<<lines++<<" BST1 and BST2 are equal: Error!"<<endl;
+    testBST &= false;
+  }
+
+  lasd::List<std::string> lst1;
+  lst1.Insert("a");
+  for(int i = 0; i < 3; i++) {
+    lst1.InsertAtFront("a" + lst1.Front());
+  }
+  lasd::BST<std::string> bst4(std::move(lst1));
+  if(bst4.Min().length() < bst4.Max().length()){
+    cout<<lines++<<" Lenght min '"<<bst4.Min()<<"' < lenght max '"<<bst4.Max()<<"': Correct!"<<endl;
+  } else {
+    cout<<lines++<<" Lenght min '"<<bst4.Min()<<"' > lenght max '"<<bst4.Max()<<"': Error!"<<endl;
+    testBST &= false;
+  }
+  if(bst4.Predecessor("aa") == "a") {
+    cout<<lines++<<" 'aa' predecessor is '"<<bst4.Predecessor("aa")<<"': Correct!"<<endl;
+  } else {
+    cout<<lines++<<" 'aa' predecessor is '"<<bst4.Predecessor("aa")<<"': Error!"<<endl;
+    testBST &= false;
+  }
+  if(bst4.Successor("aaa") == "aaaa") {
+    cout<<lines++<<" 'aaa' successor is '"<<bst4.SuccessorNRemove("aaa")<<"': Correct!"<<endl;
+  } else {
+    cout<<lines++<<" 'aaa' successor is '"<<bst4.SuccessorNRemove("aaa")<<"': Error!"<<endl;
+    testBST &= false;
+  }
+  if(!bst4.Exists("aaaa")) {
+    cout<<lines++<<" 'aaa' successor has been successfully deleted!: Correct!"<<endl; 
+  } else {
+    cout<<lines++<<" 'aaa' successore has NOT been deleted!: Error!"<<endl;
+  }
+  bst4.Clear();
+  if(bst4.Empty()) {
+    cout<<lines++<<" BST has been successfully cleared!: Correct!"<<endl; 
+  } else {
+    cout<<lines++<<" BST has NOT been cleared!: Error!"<<endl;
+  }
+  
+  lasd::SortableVector<int> vec3(RandomNumber(gen) + 3);
+  for(ulong i = 0; i < vec3.Size(); i++) {
+    vec3[i] = RandomNumber(gen);
+  }
+  lasd::BST<int> bst5(vec3);
+  cout<<"   Print BST with Random Values: \n";
+  cout<<"   ";
+  bst5.Traverse(
+    [](const int& dat){
+        cout<<dat<<"->";
+    }
+  );
+  cout<<endl;
+  if(bst5.Root().Element() == vec3[0]) {
+    cout<<lines++<<" extracted BST Root is '"<<bst5.Root().Element()<<"'(expected '"<<vec3[0]<<"'): Correct!\n";
+  } else {
+    cout<<lines++<<" extracted BST Root is '"<<bst5.Root().Element()<<"'(expected '"<<vec3[0]<<"'): Error!\n";
+    testBST &= false;   
+  }
+  vec3.Sort();
+  if(vec3[0] == bst5.Min()) {
+    cout<<lines++<<" extracted BST Min is '"<<bst5.Min()<<"'(expected '"<<vec3[0]<<"'): Correct!\n";
+  } else {
+    cout<<lines++<<" extracted BST Min is '"<<bst5.Min()<<"'(expected '"<<vec3[0]<<"'): Error!\n";
+    testBST &= false;
+  }
+  if(bst5.Min() == bst5.Predecessor(bst5.Successor(bst5.Min()))){
+    cout<<lines++<<" predecessor of Successor's Min is'"<<bst5.Predecessor(bst5.Successor(bst5.Min()))<<"'(expected '"<<bst5.Min()<<"'): Correct!\n";
+  } else {
+    cout<<lines++<<" predecessor of Successor's Min is'"<<bst5.Predecessor(bst5.Successor(bst5.Min()))<<"'(expected '"<<bst5.Min()<<"'): Error!\n";
+    testBST &= false;
+  }
+  if(vec3[vec3.Size() - 1] == bst5.Max()) {
+    cout<<lines++<<" extracted BST Max is '"<<bst5.Max()<<"'(expected '"<<vec3[vec3.Size() - 1]<<"'): Correct!\n";
+  } else {
+    cout<<lines++<<" extracted BST Max is '"<<bst5.Max()<<"'(expected '"<<vec3[vec3.Size() - 1]<<"'): Error!\n";
+    testBST &= false;
+  }
+  if(bst5.Max() == bst5.Successor(bst5.Predecessor(bst5.Max()))){
+    cout<<lines++<<" successor of Predecessor's Min is'"<<bst5.Successor(bst5.Predecessor(bst5.Max()))<<"'(expected '"<<bst5.Max()<<"'): Correct!\n";
+  } else {
+    cout<<lines++<<" successor of Predecessor's Min is'"<<bst5.Successor(bst5.Predecessor(bst5.Max()))<<"'(expected '"<<bst5.Max()<<"'): Error!\n";
+    testBST &= false;
+  }
+  bst5.Clear();
+  try{
+    bst5.Root();
+  } catch (std::length_error const&) {
+    cout<<lines++<<" leng_error called BST is Empty, doesn't have root: Correct!"<<endl; 
+  } catch (std::exception const&) {
+    cout<<lines++<<" Wrong exception called: Error!"<<endl; 
+    testBST &= false;     
+  }
+  if(bst5.Insert(5)){
+    cout<<lines++<<" Inserted value 5: Correct!"<<endl;
+  }else {
+    cout<<lines++<<" Not inserted value 5: Error!"<<endl;
+    testBST &= false;
+  }
+  if(bst5.Insert(7)) {
+    cout<<lines++<<" Inserted value 7: Correct!"<<endl;
+  }else {
+    cout<<lines++<<" Not inserted value 7: Error!"<<endl;
+    testBST &= false;
+  }
+  try {
+    bst5.Successor(8);   
+  } catch (std::length_error const&) {
+    cout<<lines++<<" leng_error, value '8' doesnt' exists in BST: Correct!"<<endl;
+  } catch (std::exception const&) {
+    cout<<lines++<<" exception, value '8' doesnt' exists in BST: Error!"<<endl;
+    testBST &= false;
+  }
+  if(bst5.Successor(6) == 7) {
+    cout<<lines++<<" '6' successor is '7': Correct!"<<endl;
+  } else {
+    cout<<lines++<<" '6' is not '7': Error!"<<endl;
+    testBST &= false;   
+  }
+
+  lasd::Vector<int>vettore(bst5);
+  for(ulong i=0; i< vettore.Size();i++) {
+    cout<<lines++<<" extracted value from Vector(BST): "<<vettore[i]<<endl;
+  }
+  lasd::List<int>lista(bst5);
+  for(ulong i=0; i< lista.Size();i++) {
+    cout<<lines++<<" extracted value from List(BST): "<<lista[i]<<endl;
+  }
+
+  lasd::Vector<int> vettore1((RandomNumber(gen)%10) + 5);
+  for(ulong i = 0; i < vettore1.Size(); i++) {
+    vettore1[i] = RandomNumber(gen);
+  }
+  cout<<lines++<<" TRAVERSE VETTORE:"; 
+  vettore1.Traverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  lasd::BST<int> binserTree(std::move(vettore1));
+  cout<<lines++<<" TRAVERSE:";
+  binserTree.Traverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" PREORDERTRAVERSE:"; 
+  binserTree.PreOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" POSTORDERTRAVERSE:"; 
+  binserTree.PostOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" INORDERTRAVERSE:"; 
+  binserTree.InOrderTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+  cout<<"\n"<<lines++<<" BREADTHTRAVERSE:"; 
+  binserTree.BreadthTraverse(
+    [](int dat){
+      cout<<"->"<<dat;
+    }
+  );
+
+
+  return testBST;
+}
+
+void TestEsercizio1() {
   cout<<(TestCostruttori()? "\nPASSATO\n" : "\nNON Passato\n");
   cout<<(TestAssegnazioni()? "\nPASSATO\n" : "\nNON Passato\n");
   cout<<(TestDictionaryFunctions()? "\nPASSATO\n" : "\nNON Passato\n");
   cout<<(TestSort()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
   cout<<(TestQueueVec()? "\nPASSATO\n\n" : "\nNON Passato\n\n");
+}
+
+void TestEsercizio2() {
+  bool testIteratori = TestIteratori();
+  cout<<"Iterator Test: ", testIteratori ? cout<<"Passed!\n" : cout<<"NOT passed!\n";
+  bool testBTVec = TestBTVec();
+  cout<<"\nBTVec Test: ", testBTVec ? cout<<"Passed!\n" : cout<<"NOT passed!\n";
+  bool testBTLnk = TestBTLnk();
+  cout<<"\nBTLnk Test: ", testBTLnk ? cout<<"Passed!\n" : cout<<"NOT passed!\n";
+  bool testBST = TestBST();
+  cout<<"\nBST Test: ", testBST ? cout<<"Passed!\n" : cout<<"NOT passed!\n";
+
+  if(testBST && testIteratori && testBTVec && testBTLnk){
+    cout<<"\nMyTest Esercizio2 : Passato!\n";
+  } else {
+    cout<<"\nMyTest Esercizio2 : NON Passato!\n";   
+  }
 }
