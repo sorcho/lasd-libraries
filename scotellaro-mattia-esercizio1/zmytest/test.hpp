@@ -16,11 +16,16 @@
 #include "../stack/stack.hpp"
 #include "../stack/lst/stacklst.hpp"
 #include "../stack/vec/stackvec.hpp"
+
 #include "../iterator/iterator.hpp"
 #include "../binarytree/binarytree.hpp"
 #include "../binarytree/lnk/binarytreelnk.hpp"
 #include "../binarytree/vec/binarytreevec.hpp"
 #include "../bst/bst.hpp"
+
+#include "../hashtable/hashtable.hpp"
+#include "../hashtable/clsadr/htclsadr.hpp"
+#include "../hashtable/opnadr/htopnadr.hpp"
 
 /* ************************************************************************** */
 
@@ -38,6 +43,9 @@ bool TestIteratori();
 bool TestBTVec();
 bool TestBTLnk();
 
+void TestEsercizio3();
+bool TestOpnAdr();
+bool TestClsAdr();
 /* ************************************************************************** */
 
 #endif

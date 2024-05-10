@@ -58,6 +58,7 @@
         "numeric": "cpp",
         "optional": "cpp",
         "string_view": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "bitset": "cpp"
     }
 }
